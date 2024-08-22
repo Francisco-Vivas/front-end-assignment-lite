@@ -1,86 +1,254 @@
-/* color palette from <https://github.com/vuejs/theme> */
-:root {
-  --vt-c-white: #ffffff;
-  --vt-c-white-soft: #f8f8f8;
-  --vt-c-white-mute: #f2f2f2;
-
-  --vt-c-black: #181818;
-  --vt-c-black-soft: #222222;
-  --vt-c-black-mute: #282828;
-
-  --vt-c-indigo: #2c3e50;
-
-  --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
-  --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
-  --vt-c-divider-dark-1: rgba(84, 84, 84, 0.65);
-  --vt-c-divider-dark-2: rgba(84, 84, 84, 0.48);
-
-  --vt-c-text-light-1: var(--vt-c-indigo);
-  --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
-  --vt-c-text-dark-1: var(--vt-c-white);
-  --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
-}
-
-/* semantic color variables for this project */
-:root {
-  --color-background: var(--vt-c-white);
-  --color-background-soft: var(--vt-c-white-soft);
-  --color-background-mute: var(--vt-c-white-mute);
-
-  --color-border: var(--vt-c-divider-light-2);
-  --color-border-hover: var(--vt-c-divider-light-1);
-
-  --color-heading: var(--vt-c-text-light-1);
-  --color-text: var(--vt-c-text-light-1);
-
-  --section-gap: 160px;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-background: var(--vt-c-black);
-    --color-background-soft: var(--vt-c-black-soft);
-    --color-background-mute: var(--vt-c-black-mute);
-
-    --color-border: var(--vt-c-divider-dark-2);
-    --color-border-hover: var(--vt-c-divider-dark-1);
-
-    --color-heading: var(--vt-c-text-dark-1);
-    --color-text: var(--vt-c-text-dark-2);
-  }
-}
+/* ======================================================================= */
+/* CSS Reset */
+/* ======================================================================= */
 
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
-  margin: 0;
-  font-weight: normal;
+    box-sizing: inherit;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    outline: 0;
+}
+
+/* Calculations will include padding + border-size */
+html {
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+
+    /* Do not scale on mobile */
+    text-size-adjust: 100%;
+
+    /* Do not highlight on mobile */
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 body {
-  min-height: 100vh;
-  color: var(--color-text);
-  background: var(--color-background);
-  transition:
-    color 0.5s,
-    background-color 0.5s;
-  line-height: 1.6;
-  font-family:
-    Inter,
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    Oxygen,
-    Ubuntu,
-    Cantarell,
-    'Fira Sans',
-    'Droid Sans',
-    'Helvetica Neue',
-    sans-serif;
-  font-size: 15px;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    min-height: 100dvh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: greyscale;
+}
+
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+/* Increase default modal height-width */
+dialog:modal {
+    max-height: 100dvh;
+    max-width: 100vw;
+}
+
+/* Balance heading across multiple lines into an even block */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    text-wrap: balance;
+}
+
+/* Prevent orphans — single word on last line */
+p {
+    text-wrap: pretty;
+}
+
+img,
+video,
+svg {
+    height: auto;
+    vertical-align: middle;
+    min-width: auto;
+}
+
+ol,
+ul {
+    list-style-type: none;
+}
+
+/* See https://css-tricks.com/nuking-motion-with-prefers-reduced-motion/ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+      transition: none;
+  }
+}
+
+
+/* ======================================================================= */
+/* Custom CSS Variables */
+/* ======================================================================= */
+
+:root {
+    --c-foreground: #FAFAFA;
+    --c-foreground-muted: #E0E0E0;
+    --c-background: #333333;
+    --c-background-muted: #2A2A2A;
+
+    --c-input-base: #444444;
+    --c-focus: #FF8800;
+    --c-border: #33333320;
+
+    --font-family-sans: Inter, 'Helvetica Neue', system-ui, sans-serif;
+    --font-family-mono: 'JetBrains Mono', Monaco, 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace;
+
+
+    --font-size-xxxs: 10px;
+    --font-size-xxs: 12px;
+    --font-size-xs: 14px;
+    --font-size-sm: 16px;
+    --font-size-md: 18px;
+    --font-size-lg: 21px;
+    --font-size-xl: 26px;
+    --font-size-xxl: 32px;
+    --font-size-xxxl: 36px;
+
+
+    --space-xxxs: 8px;
+    --space-xxs: 16px;
+    --space-xs: 20px;
+    --space-sm: 24px;
+    --space-md: 32px;
+    --space-lg: 40px;
+    --space-xl: 44px;
+    --space-xxl: 46px;
+    --space-xxxl: 52px;
+
+
+    --gap: 1rem;
+    --margin-bottom: 1.4rem;
+
+    --outline: medium solid var(--c-focus);
+    --outline-offset: 2px;
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --c-foreground: #333333;
+        --c-foreground-muted: #2A2A2A;
+        --c-background: #FAFAFA;
+        --c-background-muted: #E9E9E9;
+        --c-primary: #FF8800;
+
+        --c-input-base: #F0F0F0;
+        --c-border: #FAFAFAA0;
+    }
+}
+
+
+/* ======================================================================= */
+/* Vue default CSS variables */
+/* color palette from <https://github.com/vuejs/theme> */
+/* ======================================================================= */
+:root {
+    --vt-c-white: #ffffff;
+    --vt-c-white-soft: #f8f8f8;
+    --vt-c-white-mute: #f2f2f2;
+
+    --vt-c-black: #181818;
+    --vt-c-black-soft: #222222;
+    --vt-c-black-mute: #282828;
+
+    --vt-c-indigo: #2c3e50;
+
+    --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
+    --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
+    --vt-c-divider-dark-1: rgba(84, 84, 84, 0.65);
+    --vt-c-divider-dark-2: rgba(84, 84, 84, 0.48);
+
+    --vt-c-text-light-1: var(--vt-c-indigo);
+    --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
+    --vt-c-text-dark-1: var(--vt-c-white);
+    --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+}
+
+/* semantic color variables for this project */
+:root {
+    --color-background: var(--vt-c-white);
+    --color-background-soft: var(--vt-c-white-soft);
+    --color-background-mute: var(--vt-c-white-mute);
+
+    --color-border: var(--vt-c-divider-light-2);
+    --color-border-hover: var(--vt-c-divider-light-1);
+
+    --color-heading: var(--vt-c-text-light-1);
+    --color-text: var(--vt-c-text-light-1);
+
+    --section-gap: 160px;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-background: var(--vt-c-black);
+        --color-background-soft: var(--vt-c-black-soft);
+        --color-background-mute: var(--vt-c-black-mute);
+
+        --color-border: var(--vt-c-divider-dark-2);
+        --color-border-hover: var(--vt-c-divider-dark-1);
+
+        --color-heading: var(--vt-c-text-dark-1);
+        --color-text: var(--vt-c-text-dark-2);
+    }
+}
+
+
+/* ======================================================================= */
+/* Tag defaults */
+/* ======================================================================= */
+html {
+    font-family: var(--font-family-sans);
+    font-size: var(--font-size-md);
+    font-weight: normal;
+}
+
+body {
+    background-color: var(--c-background);
+    color: var(--c-foreground);
+    min-height: 100vh;
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+p {
+    margin-bottom: var(--margin-bottom);
+}
+
+pre {
+    text-wrap: balance;
+    padding: var(--space-sm);
+    background-color: var(--c-background-muted);
+}
+
+code,
+pre {
+    font-family: var(--font-family-mono);
+    margin-bottom: var(--margin-bottom);
+}
+
+a {
+    color: var(--c-primary);
+    text-decoration: none;
+}
+
+a:active
+a:hover,
+a:focus,
+a:visited {
+    color: var(--c-focus);
+}
+
+a:focus {
+    outline: var(--outline);
 }
